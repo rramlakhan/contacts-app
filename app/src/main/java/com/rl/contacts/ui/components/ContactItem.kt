@@ -21,7 +21,7 @@ import com.rl.contacts.data.model.Contact
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ContactItem(contact: Contact, onClick: () -> Unit, onLongClick: () -> Unit) {
+fun ContactItem(contact: Contact, onClick: () -> Unit, onLongClick: () -> Unit, onCallClick: (String) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(16.dp)
             .combinedClickable(
@@ -43,7 +43,9 @@ fun ContactItem(contact: Contact, onClick: () -> Unit, onLongClick: () -> Unit) 
         }
 
         IconButton(
-            onClick = {}
+            onClick = {
+                onCallClick(contact.phone)
+            }
         ) {
             Icon(
                 imageVector = Icons.Filled.Call,
