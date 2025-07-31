@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import com.rl.contacts.R
 import com.rl.contacts.data.model.Contact
 import com.rl.contacts.ui.components.ContactForm
+import com.rl.contacts.ui.components.DeleteConfirmDialog
 import com.rl.contacts.ui.screens.home.Home
 import com.rl.contacts.ui.screens.home.HomeViewModel
 
@@ -30,6 +31,19 @@ fun App(homeViewModel: HomeViewModel) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var isBottomSheetVisible by remember { mutableStateOf(false) }
     var selectedContact by remember { mutableStateOf<Contact?>(null) }
+    var contactToDelete by remember { mutableStateOf<Contact?>(null) }
+
+    if (contactToDelete != null) {
+        DeleteConfirmDialog(
+            onDeleteConfirm = {
+                homeViewModel.deleteContact(contactToDelete!!)
+                contactToDelete = null
+            },
+            onDismiss = {
+                contactToDelete = null
+            }
+        )
+    }
 
     if (isBottomSheetVisible) {
         ModalBottomSheet(
@@ -80,6 +94,9 @@ fun App(homeViewModel: HomeViewModel) {
             onItemClick = { contact ->
                 selectedContact = contact
                 isBottomSheetVisible = true
+            },
+            onItemLongClick = { contact ->
+                contactToDelete = contact
             }
         )
     }

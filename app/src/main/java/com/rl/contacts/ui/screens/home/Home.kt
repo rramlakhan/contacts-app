@@ -15,7 +15,8 @@ import com.rl.contacts.ui.components.ContactItem
 fun Home(
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel,
-    onItemClick: (Contact) -> Unit
+    onItemClick: (Contact) -> Unit,
+    onItemLongClick: (Contact) -> Unit
 ) {
     val contacts by homeViewModel.contacts.collectAsState(initial = emptyList())
 
@@ -27,6 +28,9 @@ fun Home(
                 contact = contact,
                 onClick = {
                     onItemClick(contact)
+                },
+                onLongClick = {
+                    onItemLongClick(contact)
                 }
             )
         }

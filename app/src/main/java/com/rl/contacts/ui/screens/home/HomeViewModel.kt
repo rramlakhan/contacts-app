@@ -22,6 +22,12 @@ class HomeViewModel(private val contactsRepository: ContactsRepository): ViewMod
             contactsRepository.updateContact(contact)
         }
     }
+
+    fun deleteContact(contact: Contact) {
+        viewModelScope.launch {
+            contactsRepository.deleteContact(contact)
+        }
+    }
 }
 
 class HomeViewModelFactory(private val contactsRepository: ContactsRepository): ViewModelProvider.Factory {

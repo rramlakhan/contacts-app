@@ -21,11 +21,12 @@ import com.rl.contacts.data.model.Contact
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ContactItem(contact: Contact, onClick: () -> Unit) {
+fun ContactItem(contact: Contact, onClick: () -> Unit, onLongClick: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(16.dp)
             .combinedClickable(
-                onClick = onClick
+                onClick = onClick,
+                onLongClick = onLongClick
             )
     ) {
         Column(
