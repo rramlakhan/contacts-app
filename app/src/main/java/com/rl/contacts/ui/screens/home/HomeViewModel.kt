@@ -16,6 +16,12 @@ class HomeViewModel(private val contactsRepository: ContactsRepository): ViewMod
             contactsRepository.addContact(contact)
         }
     }
+
+    fun updateContact(contact: Contact) {
+        viewModelScope.launch {
+            contactsRepository.updateContact(contact)
+        }
+    }
 }
 
 class HomeViewModelFactory(private val contactsRepository: ContactsRepository): ViewModelProvider.Factory {

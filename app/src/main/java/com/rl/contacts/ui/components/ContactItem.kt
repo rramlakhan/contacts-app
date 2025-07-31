@@ -1,5 +1,7 @@
 package com.rl.contacts.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,10 +19,14 @@ import androidx.compose.ui.unit.dp
 import com.rl.contacts.R
 import com.rl.contacts.data.model.Contact
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ContactItem(contact: Contact) {
+fun ContactItem(contact: Contact, onClick: () -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(16.dp)
+            .combinedClickable(
+                onClick = onClick
+            )
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(.9f)

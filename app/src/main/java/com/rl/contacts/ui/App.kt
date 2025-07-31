@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.rl.contacts.R
+import com.rl.contacts.data.model.Contact
 import com.rl.contacts.ui.components.ContactForm
 import com.rl.contacts.ui.screens.home.Home
 import com.rl.contacts.ui.screens.home.HomeViewModel
@@ -28,19 +29,26 @@ import com.rl.contacts.ui.screens.home.HomeViewModel
 fun App(homeViewModel: HomeViewModel) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var isBottomSheetVisible by remember { mutableStateOf(false) }
+    var selectedContact by remember { mutableStateOf<Contact?>(null) }
 
     if (isBottomSheetVisible) {
         ModalBottomSheet(
             onDismissRequest = {
                 isBottomSheetVisible = false
+                selectedContact = null
             },
             sheetState = sheetState
         ) {
             ContactForm(
-                contactToEdit = null,
+                contactToEdit = selectedContact,
                 onSave = { contact ->
-                    homeViewModel.addContact(contact)
+                    if (contact.id == 0) {
+                        homeViewModel.addContact(contact)
+                    } else {
+                        homeViewModel.updateContact(contact)
+                    }
                     isBottomSheetVisible = false
+                    selectedContact = null
                 }
             )
         }
@@ -66,6 +74,13 @@ fun App(homeViewModel: HomeViewModel) {
         }
     ) { innerPadding ->
 
-        Home(modifier = Modifier.padding(innerPadding), homeViewModel = homeViewModel)
+        Home(
+            modifier = Modifier.padding(innerPadding),
+            homeViewModel = homeViewModel,
+            onItemClick = { contact ->
+                selectedContact = contact
+                isBottomSheetVisible = true
+            }
+        )
     }
 }

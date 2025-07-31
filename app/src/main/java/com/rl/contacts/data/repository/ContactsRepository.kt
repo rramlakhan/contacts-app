@@ -11,4 +11,8 @@ class ContactsRepository(private val contactsDao: ContactsDao) {
     suspend fun addContact(contact: Contact) {
         contactsDao.insert(contact)
     }
+
+    suspend fun updateContact(contact: Contact) {
+        contactsDao.update(contact)
+    }
 }

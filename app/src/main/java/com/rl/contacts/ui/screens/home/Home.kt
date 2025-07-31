@@ -7,13 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.rl.contacts.data.model.Contact
 import com.rl.contacts.ui.components.ContactItem
 
 
 @Composable
 fun Home(
     modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel
+    homeViewModel: HomeViewModel,
+    onItemClick: (Contact) -> Unit
 ) {
     val contacts by homeViewModel.contacts.collectAsState(initial = emptyList())
 
@@ -22,7 +24,10 @@ fun Home(
     ) {
         items(contacts) { contact ->
             ContactItem(
-                contact = contact
+                contact = contact,
+                onClick = {
+                    onItemClick(contact)
+                }
             )
         }
     }

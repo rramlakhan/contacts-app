@@ -70,6 +70,7 @@ fun ContactForm(
             onClick = {
                 if (name.isNotEmpty() && phone .isNotEmpty()) {
                     val contact = Contact (
+                        id = contactToEdit?.id ?: 0,
                         name = name,
                         phone = phone
                     )
